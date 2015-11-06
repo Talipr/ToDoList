@@ -1,5 +1,6 @@
 import sqlite3 as lite
 
+# make our connection
 con = lite.connect('tasks.db')
 
 """
@@ -53,5 +54,3 @@ def main():
 
 
 main()
-
-
