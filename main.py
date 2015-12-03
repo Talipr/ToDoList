@@ -4,7 +4,7 @@ import Settings
 
 def create_table(con):
     """
-    creates tables in our db.
+    Creates tables in our db.
     """
     with con:
         cur = con.cursor()
@@ -16,7 +16,7 @@ def create_table(con):
 
 def insert_row(con):
     """
-    inserts new row to our tasks table.
+    Inserts new row to our tasks table.
     """
     task_name = raw_input("please enter the task name for your task list: ")
     task_date = raw_input("please enter date for your task, start with year, month, date, separated by - ")
@@ -35,7 +35,7 @@ def insert_row(con):
 
 def get_id(db_name, item_name, con):
     """
-    gets item for finding it id.
+    Gets item for finding it id.
     :param db_name
     :param item_name
     :param con: connection to the db.
@@ -50,7 +50,7 @@ def get_id(db_name, item_name, con):
 
 def insert_task_to_category(task_name, category_name, con):
     """
-    gets task and category, and insert it to tasks_to_categories table.
+    Gets task and category, and insert it to tasks_to_categories table.
     :param task_name
     :param category_name
     :param con: connection to the db.
@@ -66,7 +66,7 @@ def insert_task_to_category(task_name, category_name, con):
 
 def delete_task(con):
     """
-    deletes some task from our tasks table.
+    Deletes some task from our tasks table.
     """
     task_to_be_deleted = raw_input("please enter task name to delete: ")
     with con:
@@ -78,7 +78,7 @@ def delete_task(con):
 
 def show_all_tasks(con):
     """
-    prints all our tasks to do.
+    Prints all our tasks to do.
     """
     with con:
         cur = con.cursor()
@@ -92,7 +92,7 @@ def show_all_tasks(con):
 
 def update_status(con):
     """
-    updates task to be done.
+    Updates task to be done.
     """
     task_name_to_be_updates = raw_input("please enter the task name to update: ")
     with con:
@@ -103,7 +103,7 @@ def update_status(con):
 
 def insert_categories(con):
     """
-    insert all categories from setting file.
+    Inserts all categories from setting file.
     """
     for category in Settings.Categories:
         cur = con.cursor()
@@ -113,7 +113,7 @@ def insert_categories(con):
 
 def main():
     """
-    our main project.
+    Our main project.
     """
     con = sqlite3.connect(r"D:\Main Documents\PycharmProjects\ToDoList\tasks.db")
     create_table(con)
