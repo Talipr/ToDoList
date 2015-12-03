@@ -30,11 +30,17 @@ def insert_row(con):
                                   " to end, enter the word \"done\": ")
         while category_name != "done":
             insert_task_to_category(task_name, category_name, con)
-            category_name = raw_input("enter next category or \"done\" to finish")
-
+            category_name = raw_input("enter next category or \"done\" to finish: ")
 
 
 def get_id(db_name, item_name, con):
+    """
+    gets item for finding it id.
+    :param db_name
+    :param item_name
+    :param con: connection to the db.
+    :return: id of the item.
+    """
     with con:
         cur = con.cursor()
         cur.execute("SELECT Id FROM {db} WHERE Name = \"{value}\";".format(db=db_name, value=item_name))
@@ -43,15 +49,18 @@ def get_id(db_name, item_name, con):
 
 
 def insert_task_to_category(task_name, category_name, con):
+    """
+    gets task and category, and insert it to tasks_to_categories table.
+    :param task_name
+    :param category_name
+    :param con: connection to the db.
+    """
     task_id = get_id("all_tasks", task_name, con)
     category_id = get_id("categories", category_name, con)
-    print task_id[0], category_id[0]
-    print type(task_id[0])
-    print type(int(task_id[0]))
     with con:
         cur = con.cursor()
-        cur.execute("INSERT INTO tasks_to_categories (Task_id, Category_id) VALUES (?, ?);", (int(task_id[0]),
-                                                                                              int(category_id[0])))
+        cur.execute("INSERT INTO tasks_to_categories (Task_id, Category_id) VALUES (?, ?);", (int(task_id[0][0]),
+                                                                                              int(category_id[0][0])))
         con.commit()
 
 
@@ -83,7 +92,7 @@ def show_all_tasks(con):
 
 def update_status(con):
     """
-    Updates task to be done.
+    updates task to be done.
     """
     task_name_to_be_updates = raw_input("please enter the task name to update: ")
     with con:
@@ -110,7 +119,7 @@ def main():
     create_table(con)
     insert_categories(con)
     ACTION_DICT = {1: insert_row, 2: delete_task, 3: show_all_tasks, 4: update_status}
-    action = 6
+    action = -1
     while int(action) != 5:
         action = int(raw_input('please enter your number action. 1 for adding a new task. 2 for deleting some task.3 '
                                ' for showing all tasks. 4 for updating task\'s status. 5 for exiting the program. '))
